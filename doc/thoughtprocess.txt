@@ -1,0 +1,10 @@
+Use url = 'https://kf.kobotoolbox.org/api/v2/assets/' to access the api v2 assets
+This is a json containing information on the forms, submissions and exports of data to various formats like csv, xlsx, number of downloads, name of the form.
+
+Use url = 'https://kf.kobotoolbox.org/token/' to get token if Basic authentication is enabled.
+
+Use url = 'https://kc.kobotoolbox.org/api/v1/data' to get actual data submitted
+
+columns to drop = ["start", "__version__", "meta/instanceID", "_xform_id_string", '_attachments', '_status', '_geolocation', '_submission_time', '_tags', '_notes', '_submitted_by']
+
+
