@@ -12,7 +12,6 @@ def main():
     url = baseUrl + '.json'
     df = extract_api_data(url)
     pds = transform(df)
-    print(pds)
 
 
 if __name__ == "__main__":

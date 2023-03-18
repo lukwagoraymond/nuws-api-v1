@@ -29,18 +29,11 @@ def transform(df):
     coladd = ['dis_id', 'sc_id', 'vil_id']
     transform_columns(df, coldict, columns_to_drop)
     new_df = insert_items(df, coladd)
+    fin_dic = save_tables(new_df)
 
     # Split the dataframes into different tables per data model
     # Return concatenated list of dictionaries for each table in one dictionary
     # Convert different dataframes into dict based on particular format.
     # employ rename function here
-    """waterScheme = df[['schemeName', '_uuid', 'energySource', 'designYield',
-                      'yearEstablish', 'end']]
-    district = df[['district', '_uuid', 'end']]
-    # employ rename function to change id to scheme_id
-    subCounty = df[['subCounty', 'end']]
-    village = df[['village', 'end']]
-    dflist = [waterScheme, district, subCounty, village]
-    coldict = {'schemeName': 'name', '_uuid': 'id', 'end': 'created_at'}"""
 
-    return new_df.columns
+    return fin_dic
