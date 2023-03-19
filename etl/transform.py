@@ -116,13 +116,21 @@ def clean_import_tables(dataframez, csv_files=None):
         csv_files = csv_files
     for k in csv_files:
         dataframe = dataframez[k]
+    # Clean table names
         clean_tbl_name = k.lower().replace(" ", "_").replace("?", "") \
             .replace("-", "_").replace(r"/", "_").replace("\\", "_") \
             .replace("%", "").replace(")", "").replace(r"(", "").replace("$", "")
         if clean_tbl_name.endswith('.csv'):
             clean_tbl_name = clean_tbl_name[:-4]
+    # Clean dataframe columns
         dataframe.columns = [x.lower().replace(" ", "_").replace("?", "")
                              .replace("-", "_").replace(r"/", "_").replace("\\", "_")
                              .replace("%", "").replace(")", "").replace(r"(", "")
                              .replace("$", "") for x in dataframe.columns]
-    return clean_tbl_name, dataframe
+    # Maps pandas dtypes to mysql tables to generate table schema
+    tab_schema_str = ", ".join(f'{n} {d}' for (n, d) in
+                               zip(dataframe.columns,
+                                   dataframe.dtypes
+                                   .replace(config.replacements)))
+
+    return clean_tbl_name, dataframe, tab_schema_str
