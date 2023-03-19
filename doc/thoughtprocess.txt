@@ -5,6 +5,8 @@ Use url = 'https://kf.kobotoolbox.org/token/' to get token if Basic authenticati
 
 Use url = 'https://kc.kobotoolbox.org/api/v1/data' to get actual data submitted
 
+Use url 'https://kc.kobotoolbox.org/api/v1/data/1330078' to get NUWS form data submitted
+
 columns to drop = ["start", "__version__", "meta/instanceID", "_xform_id_string", '_attachments', '_status', '_geolocation', '_submission_time', '_tags', '_notes', '_submitted_by']
 
 

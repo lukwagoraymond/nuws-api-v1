@@ -1,14 +1,12 @@
 #!/usr/bin/python3
 """Module that contains functions for extracting
-data from the Kobo Tool box data API"""
+data from the Kobo Tool box data API
+Extracting data from saved csv tables"""
 
-import requests
+import os
 import pandas as pd
-from transform import *
-
-# string path to the original JSON file containing data extract from API
-__file_path = "file.json"
-pd.set_option('mode.chained_assignment', None)
+import requests
+from transform import move_csv_files
 
 
 def extract_api_data(url):
@@ -18,22 +16,32 @@ def extract_api_data(url):
     return pd.json_normalize(rr_obj)
 
 
-def transform(df):
-    """Takes up pandas dataframe; removes unwanted columns
-    creates different pd objects based on data model and returns dictionaries"""
-    columns_to_drop = ["_id", "start", "__version__", "meta/instanceID",
-                       "_xform_id_string", '_attachments', '_status',
-                       '_geolocation', '_submission_time', '_tags',
-                       '_notes', '_submitted_by', 'formhub/uuid']
-    coldict = {'schemeName': 'name', '_uuid': 'id', 'end': 'created_at'}
-    coladd = ['dis_id', 'sc_id', 'vil_id']
-    transform_columns(df, coldict, columns_to_drop)
-    new_df = insert_items(df, coladd)
-    fin_dic = save_tables(new_df)
+def list_csv_stored():
+    """Finds CSV files in my current working directory
+    and returns a list of all csv files found"""
+    current_wrk_dir = os.getcwd()
+    csv_files = list()
+    for file in os.listdir(current_wrk_dir):
+        if file.endswith('.csv'):
+            csv_files.append(file)
+    return csv_files
 
-    # Split the dataframes into different tables per data model
-    # Return concatenated list of dictionaries for each table in one dictionary
-    # Convert different dataframes into dict based on particular format.
-    # employ rename function here
 
-    return fin_dic
+def read_csv_files():
+    """Reads all csv files from the directory they were
+    stored. Then returns a dictionary of dataframes"""
+    csv_files = list_csv_stored()
+    dir_name = move_csv_files('data', csv_files)
+    file_path = os.getcwd() + '/' + dir_name + '/'
+    datframes = dict()
+    for csv_file in csv_files:
+        try:
+            datframes[csv_file] = pd.read_csv(file_path + csv_file)
+        except UnicodeDecodeError:
+            datframes[csv_file] = pd.read_csv(file_path + csv_file, encoding="ISO-8859-1")
+    return datframes, csv_files
+
+
+"""
+dfs = read_csv_files()
+print(dfs)"""
