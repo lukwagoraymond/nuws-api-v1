@@ -11,8 +11,8 @@ def main():
     baseUrl = sys.argv[1]
     url = baseUrl + '.json'
     df = extract_api_data(url)
-    pds = transform_dataframe(df)
-    print(pds)
+    table_names, df_dict = transform_dataframe(df)
+    print(table_names, df_dict)
 
 
 if __name__ == "__main__":

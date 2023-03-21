@@ -21,8 +21,8 @@ def transform_dataframe(df):
     new_df = insert_items(df, config.coladd)
     new_df = new_df.astype(config.col_datatypes)
     dd = save_tables(new_df)
-    dd2 = clean_import_tables(dd)
-    return dd2
+    table_names, df_dictionary = clean_import_tables(dd)
+    return table_names, df_dictionary
 
 
 def transform_columns(df, coldict, collist=None):
@@ -107,6 +107,8 @@ def clean_import_tables(dataframez, csv_files=None):
     """ Cleans imported dataframes. if function used after read_csv_files then
      use csv_file list return else create a list from dictionary from keys of
      generated dfs under save_tables function"""
+    clean_table_names = list()
+    new_dataframez = dict()
     if type(dataframez) is dict:
         csv_list = list()
         for key in dataframez.keys():
@@ -122,15 +124,13 @@ def clean_import_tables(dataframez, csv_files=None):
             .replace("%", "").replace(")", "").replace(r"(", "").replace("$", "")
         if clean_tbl_name.endswith('.csv'):
             clean_tbl_name = clean_tbl_name[:-4]
+        else:
+            clean_tbl_name
+        clean_table_names.append(clean_tbl_name)
     # Clean dataframe columns
         dataframe.columns = [x.lower().replace(" ", "_").replace("?", "")
                              .replace("-", "_").replace(r"/", "_").replace("\\", "_")
                              .replace("%", "").replace(")", "").replace(r"(", "")
                              .replace("$", "") for x in dataframe.columns]
-    # Maps pandas dtypes to mysql tables to generate table schema
-    tab_schema_str = ", ".join(f'{n} {d}' for (n, d) in
-                               zip(dataframe.columns,
-                                   dataframe.dtypes
-                                   .replace(config.replacements)))
-
-    return clean_tbl_name, dataframe, tab_schema_str
+        new_dataframez[clean_tbl_name] = dataframe
+    return clean_table_names, new_dataframez

@@ -35,9 +35,18 @@ coldict = {'schemeName': 'name', '_uuid': 'id', 'end': 'created_at'}
 """Additional columns to be added to the fetched api data"""
 coladd = ['dis_id', 'sc_id', 'vil_id']
 
+"""Replacement dictionary that maps pandas dtypes to new desired dtypes"""
 col_datatypes = {'created_at': 'datetime64[ns]', 'name': 'string',
                  'yearEstablish': 'datetime64[ns]', 'energySource': 'string',
                  'designYield': 'float', 'district': 'string',
                  'subCounty': 'string', 'village': 'string',
                  'id': 'string', 'dis_id': 'string', 'sc_id': 'string',
                  'vil_id': 'string'}
+
+"""Replacement dictionary that maps pandas dtypes to mysql tables"""
+replacements = {
+    'string': 'varchar',
+    'datetime64[ns]': 'timestamp',
+    'float64': 'float'
+}
+
