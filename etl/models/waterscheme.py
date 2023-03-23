@@ -10,9 +10,9 @@ class WaterScheme(BaseModel, Base):
     """Class for the water scheme table in storage"""
     __tablename__ = 'waterscheme'
     name = Column(String(255), nullable=False)
-    energySource = Column(String(255), nullable=False)
-    constructionYear = Column(DateTime(), nullable=True, default=datetime.date)
-    designYield = Column(Float(), nullable=False)
+    energysource = Column(String(255), nullable=False)
+    yearestablish = Column(DateTime(), nullable=True, default=datetime.date)
+    designyield = Column(Float(), nullable=False)
     district = relationship("District", backref='waterscheme', cascade="all, delete")
 
     def __init__(self, **kwargs):

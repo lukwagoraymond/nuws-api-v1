@@ -6,7 +6,7 @@ transformations of the fetched data
 import pandas as pd
 import os
 import uuid
-from config_files import config
+from etl.config_files import config
 
 """command to suppress Setting With Copy Warning when 
 updating columns with new data

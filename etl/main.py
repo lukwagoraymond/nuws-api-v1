@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 """Main entry point for the data pipeline service application"""
 import sys
-from extract import extract_api_data
-from transform import transform_dataframe
-from load import create_empty_tables, load_dataframe_to_mysql, classMap_toTables
+from etl.extract import extract_api_data
+from etl.transform import transform_dataframe
+from etl.models.load import create_empty_tables, load_dataframe_to_mysql, classMap_toTables
 
 
 def main():

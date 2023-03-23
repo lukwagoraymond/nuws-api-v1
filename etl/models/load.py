@@ -4,10 +4,10 @@ Tests for SQLAlchemy"""
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from urllib.parse import quote
-from models.waterscheme import WaterScheme
-from models.district import District
-from models.subcounty import SubCounty
-from models.village import Village
+from etl.models.waterscheme import WaterScheme
+from etl.models.district import District
+from etl.models.subcounty import SubCounty
+from etl.models.village import Village
 
 # Set up database engine and session
 engine = create_engine('mysql+mysqldb://nuws_dev:%s@localhost/nuws_data_db'

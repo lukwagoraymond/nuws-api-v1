@@ -4,4 +4,4 @@ once automatically whenever it is imported into another
 module"""
 from etl.models.engine.db_storage import DBStorage
 storage = DBStorage()
-storage.reload()
+storage.reload_api()

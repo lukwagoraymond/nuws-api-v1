@@ -18,3 +18,7 @@ Enter Password:
 Nows check for the grant permissions to the user created like this:
 echo "SHOW GRANTS FOR 'nuws_dev'@'localhost';" | mysql -u root -p
 Enter Password
+
+f"mysql+mysqldb://{MYSQL_DB['DB_USER']}:"
+                                      f"{MYSQL_DB['DB_PASS']}@{MYSQL_DB['DB_HOST']}"
+                                      f"/{MYSQL_DB['DB_NAME']}"
