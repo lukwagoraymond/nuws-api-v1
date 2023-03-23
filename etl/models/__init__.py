@@ -2,4 +2,6 @@
 """This module instantiates an object of DBStorage
 once automatically whenever it is imported into another
 module"""
-from engine.db_storage import DBStorage
+from etl.models.engine.db_storage import DBStorage
+storage = DBStorage()
+storage.reload()

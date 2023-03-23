@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """District Module for NUWS API Project"""
-from base_model import BaseModel, Base
+from etl.models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
 

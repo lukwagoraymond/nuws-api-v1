@@ -9,15 +9,14 @@ import os
 """
 DB_DETAILS = {
     'dev': {
-        'TARGET_DB': {
             'DB_TYPE': 'mysql',
-            'DB_HOST': '127.0.0.1',
-            'DB_NAME': 'nuws_data',
-            'DB_USER': os.environ.get('TARGET_DB_USER'),
-            'DB_PASS': os.environ.get('TARGET_DB_PASS')
-        }
+            'DB_HOST': 'localhost',
+            'DB_NAME': 'nuws_data_db',
+            'DB_USER': 'nuws_dev',
+            'DB_PASS': 'Nuws_dev_pwd@2012#'
     }
 }
+# os.environ.get('TARGET_DB_PASS')
 
 """List containing columns to drop from fetched api data
 """
@@ -44,9 +43,3 @@ col_datatypes = {'created_at': 'datetime64[ns]', 'name': 'string',
                  'vil_id': 'string'}
 
 """Replacement dictionary that maps pandas dtypes to mysql tables"""
-replacements = {
-    'string': 'varchar',
-    'datetime64[ns]': 'timestamp',
-    'float64': 'float'
-}
-

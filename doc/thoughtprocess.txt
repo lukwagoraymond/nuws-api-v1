@@ -9,4 +9,12 @@ Use url 'https://kc.kobotoolbox.org/api/v1/data/1330078' to get NUWS form data s
 
 columns to drop = ["start", "__version__", "meta/instanceID", "_xform_id_string", '_attachments', '_status', '_geolocation', '_submission_time', '_tags', '_notes', '_submitted_by']
 
-
+Create the db name, user and password with the script like this:
+cat setup_mysql_db.sql | mysql -hlocallost -uroot -p
+Enter Password: 
+Now check for the database name if it is created like this:
+echo "SHOW DATABASES;" | mysql -u nuws_dev -p | grep nuws_data_db
+Enter Password:
+Nows check for the grant permissions to the user created like this:
+echo "SHOW GRANTS FOR 'nuws_dev'@'localhost';" | mysql -u root -p
+Enter Password

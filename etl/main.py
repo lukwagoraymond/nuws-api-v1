@@ -3,6 +3,7 @@
 import sys
 from extract import extract_api_data
 from transform import transform_dataframe
+from load import create_empty_tables, load_dataframe_to_mysql, classMap_toTables
 
 
 def main():
@@ -12,7 +13,8 @@ def main():
     url = baseUrl + '.json'
     df = extract_api_data(url)
     table_names, df_dict = transform_dataframe(df)
-    print(table_names, df_dict)
+    create_empty_tables(classMap_toTables)
+    load_dataframe_to_mysql(table_names, df_dict)
 
 
 if __name__ == "__main__":

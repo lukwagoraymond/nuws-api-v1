@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Water Scheme Module for NUWS API Project"""
-from base_model import BaseModel, Base
+from etl.models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, DateTime, Float
 from datetime import datetime
 from sqlalchemy.orm import relationship
@@ -15,3 +15,6 @@ class WaterScheme(BaseModel, Base):
     designYield = Column(Float(), nullable=False)
     district = relationship("District", backref='waterscheme', cascade="all, delete")
 
+    def __init__(self, **kwargs):
+        """Initialises water scheme object attributes"""
+        super().__init__(**kwargs)
