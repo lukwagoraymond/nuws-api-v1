@@ -3,10 +3,17 @@
 CRUD operations between the database and objects created"""
 
 from etl.models.base_model import Base
+from etl.models.waterscheme import WaterScheme
+from etl.models.district import District
+from etl.models.subcounty import SubCounty
+from etl.models.village import Village
 from etl.config_files.config import DB_DETAILS
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from urllib.parse import quote
+
+classes = {"WaterScheme": WaterScheme, "District": District,
+           "SubCounty": SubCounty, "Village": Village}
 
 
 class DBStorage:
@@ -45,7 +52,7 @@ class DBStorage:
     def reload_api(self):
         """Creates tables in the database based on the class models created.
         Creates the current database session from created engine using
-        sessionmaker"""
+        session-maker"""
         Base.metadata.create_all(self.__engine)
         session_factory = sessionmaker(bind=self.__engine,
                                        expire_on_commit=False)
@@ -59,3 +66,35 @@ class DBStorage:
     def close(self):
         """Calls SQLAlchemy remove() method on the private session above"""
         self.__session.remove()
+
+    def all(self, cls=None):
+        """Query MySQL database and return object containing
+        data of all row data stored in form of a list of that
+        class"""
+        new_dict = dict()
+        if cls is not None:
+            objs = self.__session.query(classes[cls])
+            for obj in objs:
+                key = obj.__class__.__name__ + '.' + obj.id
+                new_dict[key] = obj
+        for c in classes.values():
+            objs = self.__session.query(c)
+            for obj in objs:
+                key = obj.__class__.__name__ + '.' + obj.id
+                new_dict[key] = obj
+        return new_dict
+
+    def get_obj(self, cls, id):
+        """Retrieves an object based on the class name and id"""
+        if cls and id:
+            fetch = f'{cls}.{id}'
+            all_objs = self.all(cls)
+            return all_objs.get_obj(fetch)
+        return None
+
+    def count(self, cls=None):
+        """Returns the number of objects in DB storage matching given class
+        else returns all objects if no class is passed"""
+        if cls:
+            return len(self.all(cls))
+        return len(self.all())
