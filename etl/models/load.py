@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """Module contains methods used to connect dataframes
 Tests for SQLAlchemy"""
-from sqlalchemy import create_engine
+import pandas as pd
+from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 from urllib.parse import quote
 from etl.models.waterscheme import WaterScheme
@@ -36,6 +37,22 @@ def create_empty_tables(classes):
         session.close()
 
 
+def check_and_insert(df, table_name):
+    """Checks if a row value in a pandas dataframe is present in a MYSQL table using
+    SQLAlchemy, and if it is not present, inserts the row value using the to_sql
+    method of Pandas
+    :param df: The Pandas dataframe to check and insert into MYSQL
+    :param table_name: The name of the MYSQL table to check and insert into"""
+    # Escape special characters '-' in the id column of the dataframe
+    df['id'] = df['id'].apply(quote)
+    # Query the MYSQL table to check if the IDs are already present
+    existing_ids = pd.read_sql_query(text(f"SELECT id FROM {table_name}"),
+                                     engine.connect())['id'].tolist()
+    # Filter the Dataframe to only include rows with IDs that are not already present in MYSQL table
+    df_to_insert = df[~df['id'].isin(existing_ids)]
+    return df_to_insert
+
+
 def load_dataframe_to_mysql(clean_table_names, new_dataframez):
     """Inserts data from dataframe object rows into respective tables
     created in mysql database
@@ -45,4 +62,6 @@ def load_dataframe_to_mysql(clean_table_names, new_dataframez):
         clean_table_names"""
     for table_name in clean_table_names:
         df = new_dataframez[table_name]
-        df.to_sql(table_name, con=engine, if_exists='append', index=False)
+        df_to_insert = check_and_insert(df, table_name)
+        if not df_to_insert.empty:
+            df_to_insert.to_sql(table_name, con=engine, if_exists='append', index=False)

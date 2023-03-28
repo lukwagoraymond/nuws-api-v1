@@ -40,8 +40,3 @@ def read_csv_files():
         except UnicodeDecodeError:
             datframes[csv_file] = pd.read_csv(file_path + csv_file, encoding="ISO-8859-1")
     return datframes, csv_files
-
-
-"""
-dfs = read_csv_files()
-print(dfs)"""

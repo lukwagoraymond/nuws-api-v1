@@ -40,6 +40,7 @@ class DBStorage:
         """Deletes object from the current database session"""
         if obj is not None:
             self.__session.delete(obj)
+            self.save()
 
     def reload_pandas(self, obj):
         """Creates tables based on classes provided in a list"""

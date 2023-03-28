@@ -3,6 +3,7 @@ Flask==2.2.3
 requests==2.28.2
 SQLAlchemy==2.0.7
 mysqlclient==2.1.1
+flasgger==0.9.5
 sudo apt-get install python3-dev
 sudo apt-get install libmysqlclient-dev
 sudo apt-get install zlib1g-dev

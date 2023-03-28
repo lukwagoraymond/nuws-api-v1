@@ -11,10 +11,17 @@ def main():
     include exception handling to ensure url is included in main.py"""
     baseUrl = sys.argv[1]
     url = baseUrl + '.json'
+    print("Extracting raw data from external API")
     df = extract_api_data(url)
-    table_names, df_dict = transform_dataframe(df)
+    print("SUCCESS: Extracting of raw data from external API")
+    table_names, df_dictionary = transform_dataframe(df)
+    print("Creating empty tables in mysql database")
+    # print(table_names, df_dictionary)
     create_empty_tables(classMap_toTables)
-    load_dataframe_to_mysql(table_names, df_dict)
+    print("SUCCESS: Creating empty tables in mysql database")
+    print("Loading data into mysql database tables")
+    load_dataframe_to_mysql(table_names, df_dictionary)
+    print("SUCCESS: Loading data into mysql database tables")
 
 
 if __name__ == "__main__":
