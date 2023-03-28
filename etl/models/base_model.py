@@ -38,11 +38,14 @@ class BaseModel:
 
     def to_dict(self):
         """Converts object to dictionary format"""
-        dictionary = dict()
-        dictionary.update(self.__dict__)
+        dictionary = self.__dict__.copy()
         dictionary.update({'__class__': self.__class__.__name__})
-        dictionary['created_at'] = self.created_at.isoformat()
-        dictionary['updated_at'] = self.created_at.isoformat()
+        if "created_at" in dictionary and dictionary['created_at'] is not None:
+            dictionary['created_at'] = dictionary['created_at'].strftime(time)
+        if 'updated_at' in dictionary and dictionary['updated_at'] is not None:
+            dictionary['updated_at'] = dictionary['updated_at'].strftime(time)
+        if "_sa_instance_state" in dictionary:
+            del dictionary["_sa_instance_state"]
         return dictionary
 
     def save(self):

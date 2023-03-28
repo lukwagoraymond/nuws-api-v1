@@ -20,6 +20,7 @@ def transform_dataframe(df):
     transform_columns(df, config.coldict, config.columns_to_drop)
     new_df = insert_items(df, config.coladd)
     new_df = new_df.astype(config.col_datatypes)
+    new_df.drop_duplicates(subset=['id'], keep='first', inplace=True)
     dd = save_tables(new_df)
     table_names, df_dictionary = clean_import_tables(dd)
     return table_names, df_dictionary
@@ -42,41 +43,67 @@ def insert_items(df, coladd):
     list argument"""
     df2 = df.reindex(df.columns.tolist() + coladd, axis=1)
     for i in coladd:
-        df2[i] = df2[i].apply(lambda v: str(uuid.uuid4()))
+        if i == 'dis_id':
+            df2[i] = df['district']
+            df2 = assign_uuid(df2, i, config.uuids_dist)
+        elif i == 'sc_id':
+            df2[i] = df['subCounty']
+            df2 = assign_uuid(df2, i, config.uuids_subc)
+        elif i == 'vil_id':
+            df2[i] = df2[i].apply(lambda v: str(uuid.uuid4()))
     return df2
+
+
+def assign_uuid(df, column_name, value_dict):
+    """Assigns a UUID to a row label under a column in a pandas Dataframe
+    if the row table in another column equals a particular entry.
+    Parameters:
+        df (pandas.DataFrame): The input Dataframe.
+        column_name (str): The name of the column to modify
+        value_dict (str): The value to use for th
+    Returns:
+        pandas.DataFrame: The modified DataFrame"""
+    for key, value in value_dict.items():
+        df[column_name] = df[column_name].replace(key, value)
+    return df
 
 
 def save_tables(df):
     """Saves the split df objects into seperate tables
     as per the data model - Optimise later."""
     # Splits the tables
-    waterScheme = df[['name', 'id', 'energySource', 'designYield',
+    waterScheme = df[['name', 'id', 'dis_id', 'sc_id', 'energySource', 'designYield',
                       'yearEstablish', 'created_at']]
+    transform_columns(waterScheme, coldict={'dis_id': 'district_id',
+                                            'sc_id': 'sub_county_id'}, collist=None)
+    waterScheme.drop_duplicates(subset=['id'], keep='first', inplace=True)
 
-    district = df[['district', 'id', 'created_at', 'dis_id']]
+    district = df[['district', 'created_at', 'dis_id']]
     transform_columns(district, coldict={'district': 'name',
-                                         'id': 'scheme_id',
                                          'dis_id': 'id'}, collist=None)
+    district.drop_duplicates(subset=['id'], keep='first', inplace=True)
 
     subCounty = df[['subCounty', 'created_at', 'dis_id', 'sc_id']]
     transform_columns(subCounty, coldict={'subCounty': 'name',
                                           'dis_id': 'district_id',
                                           'sc_id': 'id'}, collist=None)
+    subCounty.drop_duplicates(subset=['id'], keep='first', inplace=True)
 
-    village = df[['village', 'created_at', 'sc_id', 'vil_id']]
+    village = df[['village', 'created_at', 'sc_id', 'vil_id', 'dis_id']]
     transform_columns(village, coldict={'village': 'name',
-                                        'sc_id': 'sub-county_id',
-                                        'vil_id': 'id'}, collist=None)
+                                        'sc_id': 'sub_county_id',
+                                        'vil_id': 'id',
+                                        'dis_id': 'district_id'}, collist=None)
+    village.drop_duplicates(subset=['id'], keep='first', inplace=True)
     dfs = {
-        'waterScheme': waterScheme,
         'district': district,
         'subCounty': subCounty,
-        'village': village
+        'village': village,
+        'waterScheme': waterScheme
     }
-    """
     write_df_to_file(waterScheme, 'waterScheme', waterScheme.columns)
     write_df_to_file(district, 'district', district.columns)
-    write_df_to_file(subCounty, 'subCounty', subCounty.columns)
+    """write_df_to_file(subCounty, 'subCounty', subCounty.columns)
     write_df_to_file(village, 'village', village.columns)"""
     return dfs
 
@@ -118,7 +145,7 @@ def clean_import_tables(dataframez, csv_files=None):
         csv_files = csv_files
     for k in csv_files:
         dataframe = dataframez[k]
-    # Clean table names
+        # Clean table names
         clean_tbl_name = k.lower().replace(" ", "_").replace("?", "") \
             .replace("-", "_").replace(r"/", "_").replace("\\", "_") \
             .replace("%", "").replace(")", "").replace(r"(", "").replace("$", "")
@@ -127,7 +154,7 @@ def clean_import_tables(dataframez, csv_files=None):
         else:
             clean_tbl_name
         clean_table_names.append(clean_tbl_name)
-    # Clean dataframe columns
+        # Clean dataframe columns
         dataframe.columns = [x.lower().replace(" ", "_").replace("?", "")
                              .replace("-", "_").replace(r"/", "_").replace("\\", "_")
                              .replace("%", "").replace(")", "").replace(r"(", "")

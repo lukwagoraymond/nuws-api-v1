@@ -22,3 +22,5 @@ Enter Password
 f"mysql+mysqldb://{MYSQL_DB['DB_USER']}:"
                                       f"{MYSQL_DB['DB_PASS']}@{MYSQL_DB['DB_HOST']}"
                                       f"/{MYSQL_DB['DB_NAME']}"
+                                      
+When executing either the main.py or app.py use the python3 -m <module_name> inorder to correctly allow python to locate the location of the modules in other packages. Using the method python3 <module_name.py> or ./<module_name.py> could work but in other cases causes errors since python finds it difficult to locate the packages.
