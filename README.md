@@ -48,29 +48,29 @@ raymond@raymond-ThinkPad-T480:~/nuws-api-v1$ pip install -r requirements.txt
 
 Application:
 
-| Tool/Library    | Version    |
-| ------------    | -------    |
-| Python          | ^3.10.6    |
-| MySQL           | ^8.0.32    |
-| Flask           | ^2.2.3     |
-| flasgger        | ^0.9.5     |
-| mysqlclient     | ^2.1.1     |
-| SQLAlchemy      | ^2.0.7     |
-| requests        | ^2.28.2    |
-| pandas          | ^1.5.3     |
-| attrs           | ^22.2.0    |
-| certifi         | ^2022.12.7 |
-| pyproject_hooks | ^1.0.0     |
-| python-dateutil | ^2.8.2     |
-| urllib3         | ^1.26.15   |
-| loguru          | ^0.6.0     |
-| colorlog        | ^6.7.0     |
+| Tool/Library    | Version   |
+| ------------    | -------   |
+| Python          | 3.10.6    |
+| MySQL           | 8.0.32    |
+| Flask           | 2.2.3     |
+| flasgger        | 0.9.5     |
+| mysqlclient     | 2.1.1     |
+| SQLAlchemy      | 2.0.7     |
+| requests        | 2.28.2    |
+| pandas          | 1.5.3     |
+| attrs           | 22.2.0    |
+| certifi         | 2022.12.7 |
+| pyproject_hooks | 1.0.0     |
+| python-dateutil | 2.8.2     |
+| urllib3         | 1.26.15   |
+| loguru          | 0.6.0     |
+| colorlog        | 6.7.0     |
 
 Deployment:
 
-| Tool/Library | Version   |
-| ------------ | -------   |
-| docker       | ^20.10.17 |
+| Tool/Library | Version  |
+| ------------ | -------  |
+| docker       | 20.10.17 |
 
 - Once you have all the previous dependencies installed in your machine you have to set up the MYSQL database.
 
