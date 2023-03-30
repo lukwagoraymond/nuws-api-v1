@@ -1,0 +1,32 @@
+[32m2023-03-30 at 17:13:13[0m | INFO | [1m__main__:main:25[0m | 16746 >>> [1m[1mExtracting raw data from Kobo-toolbox[0m[1m[0m
+[32m2023-03-30 at 17:13:15[0m | SUCCESS | [1metl.extract:extract:21[0m | 16746 >>> [1m[32m[1mSUCCESS: Data Extracted from KoboToolbox[0m[1m[0m
+[32m2023-03-30 at 17:13:15[0m | SUCCESS | [1metl.transform:transform:27[0m | 16746 >>> [1m[32m[1mImported Pandas Dataframe columns transformed as expected[0m[1m[0m
+[32m2023-03-30 at 17:13:15[0m | SUCCESS | [1metl.transform:transform:167[0m | 16746 >>> [1m[32m[1mDataframes ['district', 'subcounty', 'village', 'waterscheme'] were cleaned well[0m[1m[0m
+[32m2023-03-30 at 17:13:15[0m | INFO | [1m__main__:main:38[0m | 16746 >>> [1m[1mCreating empty tables in 'nuws_data_db' database[0m[1m[0m
+[32m2023-03-30 at 17:13:15[0m | SUCCESS | [1metl.models.load:load:40[0m | 16746 >>> [1m[32m[1mSUCCESS: Tables in mysql database created[0m[1m[0m
+[32m2023-03-30 at 17:13:15[0m | INFO | [1m__main__:main:40[0m | 16746 >>> [1m[1mLoading data into mysql database tables[0m[1m[0m
+[32m2023-03-30 at 17:13:16[0m | SUCCESS | [1metl.models.load:load:73[0m | 16746 >>> [1m[32m[1mSUCCESS: Loaded data into mysql database tables[0m[1m[0m
+[32m2023-03-30 at 18:46:32[0m | INFO | [1m__main__:main:25[0m | 20343 >>> [1m[1mExtracting raw data from Kobo-toolbox[0m[1m[0m
+[32m2023-03-30 at 18:46:35[0m | SUCCESS | [1metl.extract:extract:21[0m | 20343 >>> [1m[32m[1mSUCCESS: Data Extracted from KoboToolbox[0m[1m[0m
+[32m2023-03-30 at 18:46:35[0m | SUCCESS | [1metl.transform:transform:27[0m | 20343 >>> [1m[32m[1mImported Pandas Dataframe columns transformed as expected[0m[1m[0m
+[32m2023-03-30 at 18:46:35[0m | SUCCESS | [1metl.transform:transform:167[0m | 20343 >>> [1m[32m[1mDataframes ['district', 'subcounty', 'village', 'waterscheme'] were cleaned well[0m[1m[0m
+[32m2023-03-30 at 18:46:35[0m | INFO | [1m__main__:main:38[0m | 20343 >>> [1m[1mCreating empty tables in 'nuws_data_db' database[0m[1m[0m
+[32m2023-03-30 at 18:46:35[0m | SUCCESS | [1metl.models.load:load:40[0m | 20343 >>> [1m[32m[1mSUCCESS: Tables in mysql database created[0m[1m[0m
+[32m2023-03-30 at 18:46:35[0m | INFO | [1m__main__:main:40[0m | 20343 >>> [1m[1mLoading data into mysql database tables[0m[1m[0m
+[32m2023-03-30 at 18:46:37[0m | SUCCESS | [1metl.models.load:load:73[0m | 20343 >>> [1m[32m[1mSUCCESS: Loaded data into mysql database tables[0m[1m[0m
+[32m2023-03-30 at 18:48:45[0m | INFO | [1m__main__:main:25[0m | 20449 >>> [1m[1mExtracting raw data from Kobo-toolbox[0m[1m[0m
+[32m2023-03-30 at 18:48:47[0m | SUCCESS | [1metl.extract:extract:21[0m | 20449 >>> [1m[32m[1mSUCCESS: Data Extracted from KoboToolbox[0m[1m[0m
+[32m2023-03-30 at 18:48:47[0m | SUCCESS | [1metl.transform:transform:27[0m | 20449 >>> [1m[32m[1mImported Pandas Dataframe columns transformed as expected[0m[1m[0m
+[32m2023-03-30 at 18:48:47[0m | SUCCESS | [1metl.transform:transform:167[0m | 20449 >>> [1m[32m[1mDataframes ['district', 'subcounty', 'village', 'waterscheme'] were cleaned well[0m[1m[0m
+[32m2023-03-30 at 18:48:47[0m | INFO | [1m__main__:main:38[0m | 20449 >>> [1m[1mCreating empty tables in 'nuws_data_db' database[0m[1m[0m
+[32m2023-03-30 at 18:48:47[0m | SUCCESS | [1metl.models.load:load:40[0m | 20449 >>> [1m[32m[1mSUCCESS: Tables in mysql database created[0m[1m[0m
+[32m2023-03-30 at 18:48:47[0m | INFO | [1m__main__:main:40[0m | 20449 >>> [1m[1mLoading data into mysql database tables[0m[1m[0m
+[32m2023-03-30 at 18:48:48[0m | SUCCESS | [1metl.models.load:load:73[0m | 20449 >>> [1m[32m[1mSUCCESS: Loaded data into mysql database tables[0m[1m[0m
+[32m2023-03-30 at 19:08:01[0m | INFO | [1m__main__:main:25[0m | 21097 >>> [1m[1mExtracting raw data from Kobo-toolbox[0m[1m[0m
+[32m2023-03-30 at 19:08:03[0m | SUCCESS | [1metl.extract:extract:21[0m | 21097 >>> [1m[32m[1mSUCCESS: Data Extracted from KoboToolbox[0m[1m[0m
+[32m2023-03-30 at 19:08:03[0m | SUCCESS | [1metl.transform:transform:27[0m | 21097 >>> [1m[32m[1mImported Pandas Dataframe columns transformed as expected[0m[1m[0m
+[32m2023-03-30 at 19:08:03[0m | SUCCESS | [1metl.transform:transform:167[0m | 21097 >>> [1m[32m[1mDataframes ['district', 'subcounty', 'village', 'waterscheme'] were cleaned well[0m[1m[0m
+[32m2023-03-30 at 19:08:03[0m | INFO | [1m__main__:main:39[0m | 21097 >>> [1m[1mCreating empty tables in 'nuws_data_db' database[0m[1m[0m
+[32m2023-03-30 at 19:08:03[0m | SUCCESS | [1metl.models.load:load:40[0m | 21097 >>> [1m[32m[1mSUCCESS: Tables in mysql database created[0m[1m[0m
+[32m2023-03-30 at 19:08:03[0m | INFO | [1m__main__:main:41[0m | 21097 >>> [1m[1mLoading data into mysql database tables[0m[1m[0m
+[32m2023-03-30 at 19:08:05[0m | SUCCESS | [1metl.models.load:load:73[0m | 21097 >>> [1m[32m[1mSUCCESS: Loaded data into mysql database tables[0m[1m[0m

@@ -200,6 +200,23 @@ paths:
           description: Invalid sub-county ID supplied
         '404':
           description: No villages were found
+  /villages:
+    get:
+      tags:
+        - villages
+      summary: List of Villages
+      description: >
+        The HTTP endpoint resource provides a client with a list
+        of all villages currently being served by NUWS water
+        utility authority.
+      operationId: getVillages
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Village'
 components:
   schemas:
     WaterScheme:

@@ -2,13 +2,33 @@
 """Flask App that serves different data based on the
 requested for HTTP endpoint route"""
 from flask import Flask, make_response, jsonify
-from flasgger import Swagger
+# from flasgger import Swagger
 from etl.models import storage
 from api.v1.views import app_views
+from logging.config import dictConfig
+dictConfig(
+    {
+        "version": 1,
+        "formatters": {
+            "default": {
+                "format": "[%(asctime)s] %(levelname)s in %(module)s >>> %(message)s",
+            }
+        },
+        "handlers": {
+            "console": {
+                "class": "logging.StreamHandler",
+                "stream": "ext://sys.stdout",
+                "formatter": "default",
+            }
+        },
+        "root": {"level": "INFO", "handlers": ["console"]},
+    }
+)
 
 # Global Flask Application Variable: app
 app = Flask(__name__)
-swagger = Swagger(app)
+
+# swagger = Swagger(app)
 
 # Global Strict Slashes
 app.url_map.strict_slashes = False

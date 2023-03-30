@@ -2,10 +2,9 @@
 """Flask routes that return json status response
 when endpoints about districts are queried"""
 from flask import jsonify, request, abort
-from flasgger import Swagger, swag_from
+# from flasgger import Swagger, swag_from
 from api.v1.views import app_views
 from etl.models import storage
-import json
 
 
 @app_views.route('/districts', methods=['GET'])

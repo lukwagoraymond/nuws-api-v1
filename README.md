@@ -63,6 +63,8 @@ Application:
 | pyproject_hooks | ^1.0.0     |
 | python-dateutil | ^2.8.2     |
 | urllib3         | ^1.26.15   |
+| loguru          | ^0.6.0     |
+| colorlog        | ^6.7.0     |
 
 Deployment:
 

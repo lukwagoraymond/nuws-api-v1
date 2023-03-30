@@ -4,16 +4,24 @@ data from the Kobo Tool box data API
 Extracting data from saved csv tables"""
 
 import os
+import loguru
 import pandas as pd
 import requests
 from etl.transform import move_csv_files
+
+logger = loguru.logger
 
 
 def extract_api_data(url):
     """Extracts data from given url"""
     rr = requests.get(url)
     rr_obj = rr.json()
-    return pd.json_normalize(rr_obj)
+    if rr_obj is not None:
+        try:
+            logger.success('SUCCESS: Data Extracted from KoboToolbox')
+            return pd.json_normalize(rr_obj)
+        except Exception as e:
+            logger.error(f"ERROR: Data wasn't extracted with error {e}")
 
 
 def list_csv_stored():
