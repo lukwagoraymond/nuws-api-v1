@@ -6,12 +6,14 @@ transformations of the fetched data
 import pandas as pd
 import os
 import uuid
+import loguru
 from etl.config_files import config
 
 """command to suppress Setting With Copy Warning when 
 updating columns with new data
 """
 pd.set_option('mode.chained_assignment', None)
+logger = loguru.logger
 
 
 def transform_dataframe(df):
@@ -22,6 +24,7 @@ def transform_dataframe(df):
     new_df = new_df.astype(config.col_datatypes)
     new_df.drop_duplicates(subset=['id'], keep='first', inplace=True)
     dd = save_tables(new_df)
+    logger.success("Imported Pandas Dataframe columns transformed as expected")
     table_names, df_dictionary = clean_import_tables(dd)
     return table_names, df_dictionary
 
@@ -31,10 +34,12 @@ def transform_columns(df, coldict, collist=None):
     Args: dataframe object
     coldict dictionary of new columns
     collist list of columns to remove"""
-    if collist is not None:
-        df.drop(collist, inplace=True, axis=1)
-    df.rename(columns={k: v for k, v in coldict.items()},
-              inplace=True)
+    try:
+        if collist is not None:
+            df.drop(collist, inplace=True, axis=1)
+        df.rename(columns={k: v for k, v in coldict.items()}, inplace=True)
+    except Exception as e:
+        logger.error(f"ERROR: The columns were not transformed as expected with error: {e}")
 
 
 def insert_items(df, coladd):
@@ -101,8 +106,6 @@ def save_tables(df):
         'village': village,
         'waterScheme': waterScheme
     }
-    write_df_to_file(waterScheme, 'waterScheme', waterScheme.columns)
-    write_df_to_file(district, 'district', district.columns)
     """write_df_to_file(subCounty, 'subCounty', subCounty.columns)
     write_df_to_file(village, 'village', village.columns)"""
     return dfs
@@ -134,30 +137,34 @@ def clean_import_tables(dataframez, csv_files=None):
     """ Cleans imported dataframes. if function used after read_csv_files then
      use csv_file list return else create a list from dictionary from keys of
      generated dfs under save_tables function"""
-    clean_table_names = list()
-    new_dataframez = dict()
-    if type(dataframez) is dict:
-        csv_list = list()
-        for key in dataframez.keys():
-            csv_list.append(key)
-        csv_files = csv_list
-    else:
-        csv_files = csv_files
-    for k in csv_files:
-        dataframe = dataframez[k]
-        # Clean table names
-        clean_tbl_name = k.lower().replace(" ", "_").replace("?", "") \
-            .replace("-", "_").replace(r"/", "_").replace("\\", "_") \
-            .replace("%", "").replace(")", "").replace(r"(", "").replace("$", "")
-        if clean_tbl_name.endswith('.csv'):
-            clean_tbl_name = clean_tbl_name[:-4]
+    try:
+        clean_table_names = list()
+        new_dataframez = dict()
+        if type(dataframez) is dict:
+            csv_list = list()
+            for key in dataframez.keys():
+                csv_list.append(key)
+            csv_files = csv_list
         else:
-            clean_tbl_name
-        clean_table_names.append(clean_tbl_name)
-        # Clean dataframe columns
-        dataframe.columns = [x.lower().replace(" ", "_").replace("?", "")
-                             .replace("-", "_").replace(r"/", "_").replace("\\", "_")
-                             .replace("%", "").replace(")", "").replace(r"(", "")
-                             .replace("$", "") for x in dataframe.columns]
-        new_dataframez[clean_tbl_name] = dataframe
-    return clean_table_names, new_dataframez
+            csv_files = csv_files
+        for k in csv_files:
+            dataframe = dataframez[k]
+            # Clean table names
+            clean_tbl_name = k.lower().replace(" ", "_").replace("?", "") \
+                .replace("-", "_").replace(r"/", "_").replace("\\", "_") \
+                .replace("%", "").replace(")", "").replace(r"(", "").replace("$", "")
+            if clean_tbl_name.endswith('.csv'):
+                clean_tbl_name = clean_tbl_name[:-4]
+            else:
+                clean_tbl_name
+            clean_table_names.append(clean_tbl_name)
+            # Clean dataframe columns
+            dataframe.columns = [x.lower().replace(" ", "_").replace("?", "")
+                                 .replace("-", "_").replace(r"/", "_").replace("\\", "_")
+                                 .replace("%", "").replace(")", "").replace(r"(", "")
+                                 .replace("$", "") for x in dataframe.columns]
+            new_dataframez[clean_tbl_name] = dataframe
+        logger.success(f"Dataframes {[x for x in clean_table_names]} were cleaned well")
+        return clean_table_names, new_dataframez
+    except Exception as e:
+        logger.error(f"Dataframes {clean_table_names} were not cleaned well with error: {e}")

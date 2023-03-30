@@ -10,5 +10,5 @@ class District(BaseModel, Base):
     __tablename__ = 'district'
     name = Column(String(255), nullable=False)
     subCounty_id = relationship("SubCounty", backref='dist_id')
-    district_id = relationship("WaterScheme", backref='district_id')
+    district_id = relationship("WaterScheme", backref='dis_id')
     village_1 = relationship("Village", backref='dist_id', cascade='all, delete')

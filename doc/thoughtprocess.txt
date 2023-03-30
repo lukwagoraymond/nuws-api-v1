@@ -1,5 +1,7 @@
 Use url = 'https://kf.kobotoolbox.org/api/v2/assets/' to access the api v2 assets
 This is a json containing information on the forms, submissions and exports of data to various formats like csv, xlsx, number of downloads, name of the form.
+python3 -m etl.main https://kc.kobotoolbox.org/api/v1/data/1330078
+
 
 Use url = 'https://kf.kobotoolbox.org/token/' to get token if Basic authentication is enabled.
 

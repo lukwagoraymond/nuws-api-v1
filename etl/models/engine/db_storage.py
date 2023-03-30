@@ -73,16 +73,12 @@ class DBStorage:
         data of all row data stored in form of a list of that
         class"""
         new_dict = dict()
-        if cls is not None:
-            objs = self.__session.query(classes[cls])
-            for obj in objs:
-                key = obj.__class__.__name__ + '.' + obj.id
-                new_dict[key] = obj
-        for c in classes.values():
-            objs = self.__session.query(c)
-            for obj in objs:
-                key = obj.__class__.__name__ + '.' + obj.id
-                new_dict[key] = obj
+        for clss in classes:
+            if cls is None or cls is classes[clss] or cls is clss:
+                objs = self.__session.query(classes[clss]).all()
+                for obj in objs:
+                    key = obj.__class__.__name__ + '.' + obj.id
+                    new_dict[key] = obj
         return new_dict
 
     def get_obj(self, cls, id):

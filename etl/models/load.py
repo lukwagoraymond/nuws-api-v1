@@ -2,6 +2,7 @@
 """Module contains methods used to connect dataframes
 Tests for SQLAlchemy"""
 import pandas as pd
+from loguru import logger
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 from urllib.parse import quote
@@ -25,16 +26,20 @@ def create_empty_tables(classes):
     from the different classes
     Args:
         classes: List of SQLAlchemy class object containing table definitions"""
-    for c in classes:
-        c.__table__.create(engine, checkfirst=True)
-    session = Session()
     try:
-        session.commit()
-    except:
-        session.rollback()
-        raise
-    finally:
-        session.close()
+        for c in classes:
+            c.__table__.create(engine, checkfirst=True)
+        session = Session()
+        try:
+            session.commit()
+        except:
+            session.rollback()
+            raise
+        finally:
+            session.close()
+        logger.success("SUCCESS: Tables in mysql database created")
+    except Exception as e:
+        logger.error(f"ERROR: Tables were not created as error: {e}")
 
 
 def check_and_insert(df, table_name):
@@ -65,3 +70,4 @@ def load_dataframe_to_mysql(clean_table_names, new_dataframez):
         df_to_insert = check_and_insert(df, table_name)
         if not df_to_insert.empty:
             df_to_insert.to_sql(table_name, con=engine, if_exists='append', index=False)
+    logger.success("SUCCESS: Loaded data into mysql database tables")
