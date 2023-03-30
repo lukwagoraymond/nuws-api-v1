@@ -134,7 +134,7 @@ Raymond Lukwago Abdul Rauf is a Civil and Environmental Engineer. He has spent t
 Some API endpoint features not yet active. 
 
 ## License :warning:
-Public Domain. No copy write protection.
+Public Domain. No copy write protection. Yes add
 
 ## Authors :black_nib:
 - Raymond Lukwago - [Github](https://github.com/lukwagoraymond) / [Twitter](https://twitter.com/lukwagoraymond)  
