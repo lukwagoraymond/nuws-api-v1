@@ -2,12 +2,13 @@
 """Flask routes that return json status response
 when endpoints about sub-counties are queried"""
 from flask import jsonify, request, abort
-# from flasgger import Swagger, swag_from
+from flasgger import swag_from
 from api.v1.views import app_views
 from etl.models import storage
 
 
 @app_views.route('/sub_counties', methods=['GET'])
+@swag_from('doc/subcounties.yml', methods=['GET'])
 def get_sc():
     """Endpoint to return a list of Sub-Counties"""
     if request.method == 'GET':

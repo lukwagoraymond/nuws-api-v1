@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Module contains methods used to connect dataframes
 Tests for SQLAlchemy"""
+import os
 import pandas as pd
 from loguru import logger
 from sqlalchemy import create_engine, text
@@ -12,9 +13,14 @@ from etl.models.subcounty import SubCounty
 from etl.models.village import Village
 
 # Set up database engine and session
-engine = create_engine('mysql+mysqldb://nuws_dev:%s@localhost/nuws_data_db'
-                       % quote('Nuws_dev_pwd@2012#')
-                       , echo=False, pool_pre_ping=True)
+DB_HOST = os.environ.get("DB_HOST", 'localhost')
+DB_NAME = os.environ.get("DB_NAME", 'nuws_data_db')
+DB_USER = os.environ.get("DB_USER", 'nuws_dev')
+DB_PASS = os.environ.get("DB_PASS", 'Nuws_dev_pwd@2012#')
+engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
+                       format(DB_USER, quote(DB_PASS),
+                              DB_HOST, DB_NAME),
+                       echo=False, pool_pre_ping=True)
 Session = sessionmaker(bind=engine)
 
 """List of classes used to map and create empty tables in mysql"""

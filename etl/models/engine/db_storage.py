@@ -7,10 +7,10 @@ from etl.models.waterscheme import WaterScheme
 from etl.models.district import District
 from etl.models.subcounty import SubCounty
 from etl.models.village import Village
-from etl.config_files.config import DB_DETAILS
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from urllib.parse import quote
+import os
 
 classes = {"WaterScheme": WaterScheme, "District": District,
            "SubCounty": SubCounty, "Village": Village}
@@ -23,10 +23,14 @@ class DBStorage:
 
     def __init__(self):
         """Automatically instantiates whenever class is called"""
-        MYSQL_DB = DB_DETAILS['dev']
-        self.__engine = create_engine('mysql+mysqldb://nuws_dev:%s@localhost/nuws_data_db'
-                                      % quote('Nuws_dev_pwd@2012#')
-                                      , echo=False, pool_pre_ping=True)
+        DB_HOST = os.environ.get("DB_HOST", 'localhost')
+        DB_NAME = os.environ.get("DB_NAME", 'nuws_data_db')
+        DB_USER = os.environ.get("DB_USER", 'nuws_dev')
+        DB_PASS = os.environ.get("DB_PASS", 'Nuws_dev_pwd@2012#')
+        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
+                                      format(DB_USER, quote(DB_PASS),
+                                             DB_HOST, DB_NAME),
+                                      echo=False, pool_pre_ping=True)
 
     def new(self, obj):
         """Adds a new object to the current database session"""

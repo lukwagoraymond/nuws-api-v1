@@ -1,0 +1,59 @@
+Gets all schemes served by NUWS
+---
+tags:
+  - name: schemes
+schemes:
+  - 'http'
+consumes:
+  - application/json
+produces:
+  - application/json
+definitions:
+  WaterScheme:
+    type: object
+    properties:
+      __class__:
+        type: string
+        description: Class name(obj.__class__.__name__)
+        example: WaterScheme
+      id:
+        type: string
+        description: unique id of the object
+        example: c5fab09f-ed1d-4267-a3f9-08b28b8fa979
+      name:
+        type: string
+        description: name attribute of the object
+        example: Client Water System
+      created_at:
+        type: string
+        description: datetime the object instance was created
+        example: 2023-03-14 20:44:26
+      updated_at:
+        type: string
+        description: datetime the object was update
+        example: 2023-03-14 22:14:16
+      district_id:
+        type: string
+        description: district id linking to reference table
+        example: c3213dbb-78fb-4ec7-8424-ff639639d913
+      sub_county_id:
+        type: string
+        description: sub-county id linking to reference table
+        example: 61c1e6a6-0523-44f9-b4f6-14d322abc68b
+paths:
+  /schemes:
+    get:
+      tags:
+        - schemes
+      summary: List of Schemes
+      description: This HTTP endpoint resource provides a client with the list
+       of all piped water supply systems in the inventory database.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/definitions/WaterScheme'

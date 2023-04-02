@@ -3,21 +3,6 @@
 needed to access mysql server,
 Needed information to transform original dataframe object"""
 
-import os
-
-"""Information to use to access mysql server
-"""
-DB_DETAILS = {
-    'dev': {
-            'DB_TYPE': 'mysql',
-            'DB_HOST': 'localhost',
-            'DB_NAME': 'nuws_data_db',
-            'DB_USER': 'nuws_dev',
-            'DB_PASS': 'Nuws_dev_pwd@2012#'
-    }
-}
-# os.environ.get('TARGET_DB_PASS')
-
 """List containing columns to drop from fetched api data
 """
 columns_to_drop = ["_id", "start", "__version__", "meta/instanceID",

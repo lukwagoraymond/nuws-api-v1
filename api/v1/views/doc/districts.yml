@@ -1,0 +1,47 @@
+Gets the list of all districts served by NUWS
+---
+tags:
+  - name: districts
+definitions:
+  District:
+    type: object
+    properties:
+      __class__:
+        type: 'string'
+        description: 'Class name(obj.__class__.__name__)'
+        example: 'District'
+      id:
+        type: 'string'
+        description: 'unique id of the object'
+        example: 'c3213dbb-78fb-4ec7-8424-ff639639d913'
+      name:
+        type: 'string'
+        description: 'name of the district local government'
+        example: 'yumbe'
+      created_at:
+        type: 'string'
+        description: 'datetime the object instance was created'
+        example: '2023-03-14 20:44:26'
+      updated_at:
+        type: 'string'
+        description: 'datetime the object instance was updated'
+        example: '2023-03-17 16:54:10'
+paths:
+  '/districts':
+    get:
+      tags:
+        - districts
+      summary: List of Districts
+      description: 'The HTTP endpoint resource provides a client with
+       a list of all districts currently being served by NUWS water
+        utility authority.'
+      parameters:
+        - name: type
+          type: string
+          in: query
+          required: True
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/District'

@@ -158,11 +158,13 @@ raymond@raymond:~$ docker run -p 8888:5000 --link <container_name>:dbserver \
 1. See Water Schemes managed by NUWS Water Utility - ```http://localhost:8888/nuws/api/v1.0/schemes```
 ![States](doc/states.png)
 
-1. See Districts served by NUWS Water Utility - ```http://localhost:8888/nuws/api/v1.0/districts```
+2. See Districts served by NUWS Water Utility - ```http://localhost:8888/nuws/api/v1.0/districts```
 ![Amenities](doc/amenities.png)
 
-2. See Villages served by NUWS Water Utility - ```http://localhost:8888/nuws/api/v1.0/villages```
+3. See Villages served by NUWS Water Utility - ```http://localhost:8888/nuws/api/v1.0/villages```
 ![Articles](doc/articles.png)
+
+4. See API documentation associated to above endpoints - ```http://192.168.1.171:8888/apidocs/#/```
 
 ## Built With: :email:
 

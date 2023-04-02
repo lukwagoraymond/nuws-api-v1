@@ -1,0 +1,334 @@
+openapi: 3.0.3
+info:
+  title: NUWS Water Utility - REST API
+  description: |-
+    This is a _Minimum Viable Product (MVP)_ of a REST API that allows `NUWS` a water utility authority to report data to clients with different reporting requirements more efficiently. Through the API, the clients (_Ex. Development Partners, Research Institutes, Regulatory Authorities etc_) can interact with the API, view its documentation, and test its functionality. 
+    This MVP REST API handles some endpoint view functions and not others. The implemented endpoints are the ones the clients can use to perform certain actions or retrieve information from the NUWS server on this page. As an MVP, priority was given to some features to illustrate the overall concept of integration. That way, with time, we can improve the API in general, and expose some more of the new other features.
+    
+    Some useful links:
+    - [NUWS API Project repository](https://github.com/lukwagoraymond/nuws-api-v1)
+    - [The source API definition for NUWS API](https://github.com/lukwagoraymond/nuws-api-v1/tree/pipeline/api)
+
+  contact:
+    name: Raymond Lukwago A.R
+    email: lukwagoraymond3@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 0.1.0
+servers:
+  - url: http://127.0.0.1:5000/nuws/api/v1.0
+tags:
+  - name: schemes
+    description: All about schemes
+    externalDocs:
+      description: Find out more
+      url: http://127.0.0.1:5000
+  - name: districts
+    description: Schemes in a district
+    externalDocs:
+      description: Find out about districts
+      url: http://127.0.0.1:5000
+  - name: subcounties
+    description: Find out about subcounties
+    externalDocs:
+      description: More about Districts
+      url: http://127.0.0.1:5000
+  - name: villages
+    description: More about Villages
+paths:
+  /schemes:
+    get:
+      tags:
+        - schemes
+      summary: List of Schemes
+      description: >
+        This HTTP endpoint resource provides a client with the list
+        of all piped water supply systems in the inventory database.
+      operationId: getSchemes
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/WaterScheme'
+  /schemes/{district_id}:
+    get:
+      tags:
+        - schemes
+      summary: Schemes listed by District
+      description: >
+        The HTTP endpoint resource provides a client with the list
+        of all piped water supply systems in a particular district.
+      operationId: Schemes_byDistrictID
+      parameters:
+        - name: district_id
+          in: path
+          description: unique ID representing a district
+          required: true
+          schema:
+            type: string
+          example: c3213dbb-78fb-4ec7-8424-ff639639d913
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/WaterScheme'
+        '400':
+          description: Invalid district ID supplied
+        '404':
+          description: District not found
+  /schemes/{scheme_id}:
+    get:
+      tags:
+        - schemes
+      summary: Find Scheme by ID
+      description: >
+        The HTTP endpoint resource provides a client with the details
+        of a piped water supply system.
+      operationId: getScheme_byID
+      parameters:
+        - name: scheme_id
+          in: path
+          description: unique ID representing a scheme
+          required: true
+          schema:
+            type: string
+            example: c5fab09f-ed1d-4267-a3f9-08b28b8fa979
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WaterScheme'
+        '400':
+          description: Invalid scheme ID supplied
+        '404':
+          description: Water Supply Scheme not found
+  /districts:
+    get:
+      tags:
+        - districts
+      summary: List of Districts
+      description: >
+        The HTTP endpoint resource provides a client with a list
+        of all districts currently being served by NUWS water
+        utility authority.
+      operationId: getDistricts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/District'
+  /{district_id}/subcounties:
+    get:
+      tags:
+        - districts
+      summary: Get Sub-Counties by District
+      description: >
+        The HTTP endpoint resource provides a client with the list
+        of sub-counties in a particular district currently served by
+        NUWS water utility authority.
+      operationId: getsub-counties_byDistrictID
+      parameters:
+        - name: district_id
+          in: path
+          description: unique ID representing the district
+          required: true
+          schema:
+            type: string
+            example:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubCounty'
+        '400':
+          description: Invalid district ID supplied
+        '404':
+          description: No sub-counties were found
+  /subcounties:
+    get:
+      tags:
+        - subcounties
+      summary: List of sub-counties
+      description: >
+        The HTTP endpoint resource provides a client with a list
+        of all sub-counties currently being served by NUWS water
+        utility authority.
+      operationId: getSubCounties
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubCounty'
+  /{subcounty_id}/villages:
+    get:
+      tags:
+        - subcounties
+      summary: Get villages by Sub-County
+      description: >
+        The HTTP endpoint resource provides a client with a list
+        of all villages currently being served by NUWS water utility
+        authority in a particular Sub-County
+      operationId: getsub-counties_byDistID
+      parameters:
+        - name: subcounty_id
+          in: path
+          description: a unique ID representing a sub-county
+          required: true
+          schema:
+            type: string
+            example:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Village'
+        '400':
+          description: Invalid sub-county ID supplied
+        '404':
+          description: No villages were found
+  /villages:
+    get:
+      tags:
+        - villages
+      summary: List of Villages
+      description: >
+        The HTTP endpoint resource provides a client with a list
+        of all villages currently being served by NUWS water
+        utility authority.
+      operationId: getVillages
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Village'
+components:
+  schemas:
+    WaterScheme:
+      type: object
+      properties:
+        __class__:
+          type: string
+          description: Class name(obj.__class__.__name__)
+          example: WaterScheme
+        id:
+          type: string
+          description: unique id of the object
+          example: c5fab09f-ed1d-4267-a3f9-08b28b8fa979
+        name:
+          type: string
+          description: name attribute of the object
+          example: Client Water System
+        created_at:
+          type: string
+          description: datetime the object instance was created
+          example: 2023-03-14 20:44:26
+        updated_at:
+          type: string
+          description: datetime the object was update
+          example: 2023-03-14 22:14:16
+        district_id:
+          type: string
+          description: district id linking to reference table
+          example: c3213dbb-78fb-4ec7-8424-ff639639d913
+        sub_county_id:
+          type: string
+          description: sub-county id linking to reference table
+          example: 61c1e6a6-0523-44f9-b4f6-14d322abc68b
+    District:
+      type: object
+      properties:
+        __class__:
+          type: string
+          description: Class name(obj.__class__.__name__)
+          example: District
+        id:
+          type: string
+          description: unique id of the object
+          example: c3213dbb-78fb-4ec7-8424-ff639639d913
+        name:
+          type: string
+          description: name of the district local government
+          example: yumbe
+        created_at:
+          type: string
+          description: datetime the object instance was created
+          example: 2023-03-14 20:44:26
+        updated_at:
+          type: string
+          description: datetime the object instance was updated
+          example: 2023-03-17 16:54:10
+    SubCounty:
+      type: object
+      properties:
+        __class__:
+          type: string
+          description: Class name(obj.__class__.__name__)
+          example: SubCounty
+        id:
+          type: string
+          description: unique id of a Sub-County
+          example: 61c1e6a6-0523-44f9-b4f6-14d322abc68b
+        name:
+          type: string
+          description: name of the Sub-County
+          example: romogi
+        created_at:
+          type: string
+          description: datetime the object instance was created
+          example: 2023-03-14 20:44:26
+        updated_at:
+          type: string
+          description: datetime the object instance was updated
+          example: 2023-03-17 16:54:10
+        district_id:
+          type: string
+          description: district id linking to reference table
+          example: c3213dbb-78fb-4ec7-8424-ff639639d913
+    Village:
+      type: object
+      properties:
+        __class__:
+          type: string
+          description: Class name(obj.__class__.__name__)
+          example: Village
+        id:
+          type: string
+          description: unique id for a village
+          example: 669bf45a-eb3c-4437-aa75-174d5422d571
+        name:
+          type: string
+          description: name of a village
+          example: village_6
+        created_at:
+          type: string
+          description: datetime the object instance was created
+          example: 2023-03-14 20:44:26
+        updated_at:
+          type: string
+          description: datetime the object instance was created
+          example: 2023-03-17 16:54:10
+        sub_county_id:
+          type: string
+          description: sub-county id linking to reference table
+          example: 61c1e6a6-0523-44f9-b4f6-14d322abc68b
+        district_id:
+          type: string
+          description: district id linking to reference table
+          example: c3213dbb-78fb-4ec7-8424-ff639639d913

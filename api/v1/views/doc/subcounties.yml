@@ -1,0 +1,49 @@
+Gets all sub-counties served by NUWS
+---
+tags:
+  - name: subcounties
+definitions:
+  SubCounty:
+    type: object
+    properties:
+      __class__:
+        type: string
+        description: Class name(obj.__class__.__name__)
+        example: SubCounty
+      id:
+        type: string
+        description: unique id of a Sub-County
+        example: 61c1e6a6-0523-44f9-b4f6-14d322abc68b
+      name:
+        type: string
+        description: name of the Sub-County
+        example: romogi
+      created_at:
+        type: string
+        description: datetime the object instance was created
+        example: 2023-03-14 20:44:26
+      updated_at:
+        type: string
+        description: datetime the object instance was updated
+        example: 2023-03-17 16:54:10
+      district_id:
+        type: string
+        description: district id linking to reference table
+        example: c3213dbb-78fb-4ec7-8424-ff639639d913
+paths:
+  /subcounties:
+    get:
+      tags:
+        - subcounties
+      summary: List of sub-counties
+      description: >
+        The HTTP endpoint resource provides a client with a list
+        of all sub-counties currently being served by NUWS water
+        utility authority.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/SubCounty'
