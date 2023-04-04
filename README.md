@@ -154,6 +154,9 @@ raymond@raymond:~$ docker run -p 8888:5000 --link <container_name>:dbserver \
 
 ## Usage :open_file_folder:
 
+0. Open up the browser and fill in the Kobo Toolbox data collection sheet - ```https://ee.kobotoolbox.org/x/o4YIEJLJ```
+![States](data/KoboTool.png)
+
 0. Open up the browser and paste to fetch, transform & load data into database - ```http://localhost:5000/nuws/api/v1.0/fetch```
 ![States](data/fetch.png)
 
