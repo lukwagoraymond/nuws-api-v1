@@ -1,13 +1,15 @@
 # NUWS-API-Version-1
 
-![EmailScrapper](doc/hbnb-logo.png)
+<p align="center">
+    <img src="data/logo.png" alt="EmailScrapper"/>
+</p>
 
 ## Description :book:
 
 The NUWS-API is a basic Extract-Transform-Load (ETL) data pipeline that extracts data from various field submissions, makes transforms to the data and loads it into a dedicated MYSQL server database of choice. The field submissions are collected using a data collection tool called Kobo Toolbox. You can read more about Kobo Toolbox platform here: [KoboToolbox](https://kobotoolbox.org/#home). The data collected is extracted through an Application Programming Inteface (API) provided by the platform. The data is further transformed in the backend of the application and mapped to its corresponding tables in the database.
 The complete application on the backend is integrating a KoboToolbox Data collection API, an ETL data pipeline built with Python 3.10.6, a MySQL server database and Flask RESTful API with a dynamic landing page made from HTML5/CSS3 on the front-end.
 
-![EmailScrapper](doc/hbnb-stack.png)
+![EmailScrapper](data/logging.png)
 
 This repository contains the first version of the NUWS data pipeline API. The project was built for use on UNIX based OS distributions only. You can check out this section for links to newer versions and features in these links below.
 
@@ -146,25 +148,25 @@ CONTAINER ID   IMAGE          COMMAND                  CREATED              STAT
 ```console
 raymond@raymond:~$ docker run -p 8888:5000 --link <container_name>:dbserver \
 > -e DB_HOST=dbserver -e DB_NAME=<database_name> -e DB_USER=<db_username \
-> -e DB_PASS=<db_password> nuws-mvp-v1
+> -e DB_PASS=<db_password> lukwagoraymond/nuws-mvp-v1
 ...
 ```
 
 ## Usage :open_file_folder:
 
-0. Open up the browser and paste to fetch, transform & load data into database - ```http://localhost:8888/nuws/api/v1.0/fetch```
-![States](doc/states.png)
+0. Open up the browser and paste to fetch, transform & load data into database - ```http://localhost:5000/nuws/api/v1.0/fetch```
+![States](data/fetch.png)
 
-1. See Water Schemes managed by NUWS Water Utility - ```http://localhost:8888/nuws/api/v1.0/schemes```
-![States](doc/states.png)
+1. See Water Schemes managed by NUWS Water Utility - ```http://localhost:5000/nuws/api/v1.0/schemes```
+![States](data/schemes.png)
 
-2. See Districts served by NUWS Water Utility - ```http://localhost:8888/nuws/api/v1.0/districts```
-![Amenities](doc/amenities.png)
+2. See Districts served by NUWS Water Utility - ```http://localhost:5000/nuws/api/v1.0/districts```
+![Amenities](data/districts.png)
 
-3. See Villages served by NUWS Water Utility - ```http://localhost:8888/nuws/api/v1.0/villages```
-![Articles](doc/articles.png)
+3. See Villages served by NUWS Water Utility - ```http://localhost:5000/nuws/api/v1.0/villages```
+![Articles](data/villages.png)
 
-4. See API documentation associated to above endpoints - ```http://192.168.1.171:8888/apidocs/#/```
+4. See API documentation associated to above endpoints - ```http://192.168.1.171:5000/apidocs/#/```
 
 ## Built With: :email:
 
