@@ -56,6 +56,16 @@ raymond@raymond-ThinkPad-T480:~/nuws-api-v1$ pip install -r requirements.txt
 ....
 ```
 
+- Install all system wide dependencies for this application on your machine. Run this code below:
+
+```console
+raymond@raymond-ThinkPad-T480:~/nuws-api-v1$ sudo apt update
+raymond@raymond-ThinkPad-T480:~/nuws-api-v1$ sudo apt-get install python3-dev
+raymond@raymond-ThinkPad-T480:~/nuws-api-v1$ sudo apt-get install libmysqlclient-dev
+raymond@raymond-ThinkPad-T480:~/nuws-api-v1$ sudo apt-get install zlib1g-dev
+....
+```
+
 Application:
 
 | Tool/Library    | Version   |
@@ -118,7 +128,7 @@ raymond@raymond-ThinkPad-T480:~/nuws-api-v1$ DB_HOST=<IP-address> DB_NAME=<datab
 
 ### (2) Simply run the docker container on your local machine or server.
 
-- Make sure you have Docker installed. Follow the link on the official Docker site on how to install Docker on your UNIX distribution.
+- Make sure you have Docker installed and all system-wide dependencies above have been installed. Follow the link on the official Docker site on how to install Docker on your UNIX distribution.
 
 - Once you've ascertained you do have docker on your machine, run the code below to create a MYSQL server container.
 
